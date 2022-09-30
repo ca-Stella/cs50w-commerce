@@ -6,6 +6,8 @@ from django.urls import reverse
 
 from .models import User, Auction, AuctionForm
 
+
+
 def index(request):
     return render(request, "auctions/index.html")
 
@@ -63,11 +65,17 @@ def register(request):
 
 def create(request):
     if request.method == "POST":
-        title = request.POST["title"]
-        description = request.POST["description"]
-        starting_bid = request.POST["starting"]
-        url = request.POST["url"]
-        category = request.POST["category"]
+        # Access username
+        user = User.objects.get(username=request.user)
+
+        # Take in data submitted and save as form
+        form = AuctionForm(request.POST)
+
+        # Check if form data is valid
+        if form.is_valid(): 
+            auction = form.save(commit=False)
+            auction.user = user
+            auction.save()
 
         return HttpResponseRedirect(reverse("index"))
     else:

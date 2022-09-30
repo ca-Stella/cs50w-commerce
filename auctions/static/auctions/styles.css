@@ -1,3 +1,7 @@
 body {
     padding: 10px;
 }
+
+#id_starting_bid {
+    padding-left: 26px;
+}

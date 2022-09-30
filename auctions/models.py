@@ -11,8 +11,8 @@ class Auction(models.Model):
     description = models.TextField()
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="owner")
     starting_bid = models.DecimalField(max_digits=8, decimal_places=2)
-    url = models.ImageField()
-    category = models.CharField(max_length=100)
+    url = models.ImageField(blank=True)
+    category = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
         return f"{self.title} from {self.user}"
@@ -26,7 +26,6 @@ class AuctionForm(ModelForm):
         super(AuctionForm, self).__init__(*args, **kwargs)
         for fname, f in self.fields.items():
             f.widget.attrs['class'] = 'form-control'
-
 
 class Bids(models.Model):
     pass
