@@ -2,5 +2,9 @@
 {% block title %} Auction {% endblock %}
 
 {% block body %}
-
+    <h2>{{ listing.title }}</h2>
+    <p>{{ listing.description }}</p>
+    <p>$ {{ listing.starting_bid }}</p>
+    <p>{{ listing.category }}</p>
+    <img src="{{ listing.url }}" alt="Image">
 {% endblock %}
