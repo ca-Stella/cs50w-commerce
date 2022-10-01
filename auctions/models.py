@@ -5,14 +5,13 @@ from django.forms import ModelForm
 CATEGORIES = [
     ('BOOKS', 'Books'),
     ('CLOTH', 'Clothes'),
-    ('FOODS', 'Foods'),
+    ('ELECT', 'Electronics'),
     ('HEALTH', 'Health'),
     ('HOBBY', 'Hobbies'),
     ('KIDTO', 'Toys'),
     ('SPORT', 'Sports'),
     ('OTHER', 'None'),
 ]
-
 
 class User(AbstractUser):
     pass
