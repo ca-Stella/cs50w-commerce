@@ -2,6 +2,17 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.forms import ModelForm
 
+CATEGORIES = [
+    ('BOOKS', 'Books'),
+    ('CLOTH', 'Clothes'),
+    ('FOODS', 'Foods'),
+    ('HEALTH', 'Health'),
+    ('HOBBY', 'Hobbies'),
+    ('KIDTO', 'Toys'),
+    ('SPORT', 'Sports'),
+    ('OTHER', 'None'),
+]
+
 
 class User(AbstractUser):
     pass
@@ -12,7 +23,7 @@ class Auction(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="owner")
     starting_bid = models.DecimalField(max_digits=8, decimal_places=2)
     url = models.ImageField(blank=True)
-    category = models.CharField(max_length=100, blank=True)
+    category = models.CharField(max_length=100, choices=CATEGORIES, default=CATEGORIES[7][1], blank=True)
 
     def __str__(self):
         return f"{self.title} from {self.user}"
