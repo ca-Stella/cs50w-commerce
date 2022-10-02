@@ -14,17 +14,17 @@
         <input class="btn btn-secondary" type="submit" name="watchlist" value="{{ watchlist_text }}">
     </form>
 
-		{% if message %}
-        <div>{{ message }}</div>
+    {% if message %}
+        <div class="alert alert-danger" style="margin: 2rem">{{ message }}</div>
     {% endif %}
 
     <form action="{% url 'listing' listing.id %}" method="post">
         {% csrf_token %}
-        <div class="form-group">
+        <div class="form-group" style="display: grid; grid-template-columns: 5rem 10rem; justify-content: center; align-items: baseline;">
             {{ bidform.bid_price.label_tag }}
             {{ bidform.bid_price }}
         </div>
-        <input class="btn btn-primary" type="submit" name="bid" value="Make a bid"/>
+        <input class="btn btn-primary" type="submit" name="bid" value="Make a bid" style="display: block;margin-right: auto; margin-left: auto;"/>
     </form>
 
     {% endif %}

@@ -10,7 +10,7 @@ class Bid(models.Model):
     bid_price=models.DecimalField(max_digits=8, decimal_places=2)
 
     def __str__(self):
-        return f"{self.user} bidding {self.bid_price}"
+        return f"{self.user} bidding ${self.bid_price}"
 
 class Auction(models.Model):
     CATEGORIES = [
@@ -52,15 +52,13 @@ class WatchList(models.Model):
     def __str__(self):
         return f"{self.user} watching {self.listing}"
 
-
-
 class BidForm(ModelForm):
     class Meta: 
         model = Bid
         fields = ['bid_price']
 
     def __init__(self, *args, **kwargs):
-        super(AuctionForm, self).__init__(*args, **kwargs)
+        super(BidForm, self).__init__(*args, **kwargs)
         for fname, f in self.fields.items():
             f.widget.attrs['class'] = 'form-control'
 

@@ -77,6 +77,7 @@ def create(request):
         if form.is_valid(): 
             auction = form.save(commit=False)
             auction.user = user
+            auction.winner = user
             auction.current_price = auction.starting_bid
             auction.save()
 
@@ -128,6 +129,7 @@ def listing(request, listing_id):
                 bid.user = user
                 bid.save()
                 listing.current_price = bid.bid_price
+                listing.winner = user
                 listing.save()
 
         return render(request, "auctions/listing.html", {
