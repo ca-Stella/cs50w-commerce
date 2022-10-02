@@ -5,3 +5,7 @@ body {
 #id_starting_bid {
     padding-left: 26px;
 }
+
+.infotext {
+    font-weight: bold;
+}

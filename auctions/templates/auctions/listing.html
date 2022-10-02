@@ -2,9 +2,9 @@
 {% block title %} Auction {% endblock %}
 
 {% block body %}
-    <h2>{{ listing.title }}</h2>
-    <p>{{ listing.description }}</p>
-    <p>$ {{ listing.starting_bid }}</p>
-    <p>{{ listing.get_category_display }}</p>
     <img src="{{ listing.url.url }}" alt="Image" style="height: 200px;">
+    <h2>{{ listing.title }}</h2>
+    <p><span class="infotext">Description:</span> {{ listing.description }}</p>
+    <p><span class="infotext">Current price is:</span> $ {{ listing.starting_bid }}</p>
+    <p><span class="infotext">Category:</span> {{ listing.get_category_display }}</p>
 {% endblock %}
