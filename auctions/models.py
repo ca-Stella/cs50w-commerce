@@ -49,7 +49,9 @@ class WatchList(models.Model):
 
 
 class Bids(models.Model):
-    pass
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="bid")
+    listing = models.ForeignKey(Auction, on_delete=models.CASCADE, related_name="bid")
+    bid_price=models.DecimalField(max_digits=8, decimal_places=2)
 
 class Comments(models.Model):
     pass
