@@ -11,6 +11,21 @@
     {% if user.is_authenticated %}
     <form action="{% url 'listing' listing.id %}" method="post">
         {% csrf_token %}
-        <input class="btn btn-primary" type="submit" value="{{ watchlist_text }}">
+        <input class="btn btn-secondary" type="submit" name="watchlist" value="{{ watchlist_text }}">
+    </form>
+
+		{% if message %}
+        <div>{{ message }}</div>
+    {% endif %}
+
+    <form action="{% url 'listing' listing.id %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ bidform.bid_price.label_tag }}
+            {{ bidform.bid_price }}
+        </div>
+        <input class="btn btn-primary" type="submit" name="bid" value="Make a bid"/>
+    </form>
+
     {% endif %}
 {% endblock %}

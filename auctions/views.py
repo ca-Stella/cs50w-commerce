@@ -4,8 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User, Auction, AuctionForm, WatchList, Bids
-
+from .models import User, Auction, AuctionForm, WatchList, Bid, BidForm
 
 
 def index(request):
@@ -98,7 +97,7 @@ def listing(request, listing_id):
     else:
         watchlist_text = "Watchlist"
 
-    if request.method == "POST":
+    if request.method == "POST" and 'watchlist' in request.POST:
         if user.watched.filter(listing=listing):
             user.watched.filter(listing = listing).delete()
             watchlist_text = "Watchlist"
@@ -110,13 +109,35 @@ def listing(request, listing_id):
             watch.save()
             watchlist_text = "Stop Watching"
 
+    elif request.method == "POST" and 'bid' in request.POST:
+        # Take in data submitted 
+        form = BidForm(request.POST)
+
+        # Check if form data is valid
+        if form.is_valid(): 
+            bid = form.save(commit=False)
+
+            if bid.bid_price < listing.current_price:
+                return render(request, "auctions/listing.html", {
+                    "listing": listing,
+                    "watchlist_text": watchlist_text,
+                    "bidform": BidForm(),
+                    "message": "Error! Invalid bid price!"
+                })
+            else:
+                bid.user = user
+                bid.save()
+                listing.current_price = bid.bid_price
+                listing.save()
 
         return render(request, "auctions/listing.html", {
             "listing": listing,
-            "watchlist_text": watchlist_text
+            "watchlist_text": watchlist_text,
+            "bidform": BidForm(),
         })
 
     return render(request, "auctions/listing.html", {
         "listing": listing,
-        "watchlist_text":watchlist_text
+        "watchlist_text":watchlist_text,
+        "bidform": BidForm(),
     })
