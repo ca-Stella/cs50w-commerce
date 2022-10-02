@@ -78,6 +78,7 @@ def create(request):
         if form.is_valid(): 
             auction = form.save(commit=False)
             auction.user = user
+            auction.current_price = auction.starting_bid
             auction.save()
 
         return HttpResponseRedirect(reverse("index"))
