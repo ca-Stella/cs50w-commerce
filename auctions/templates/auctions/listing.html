@@ -7,4 +7,10 @@
     <p><span class="infotext">Description:</span> {{ listing.description }}</p>
     <p><span class="infotext">Current price is:</span> $ {{ listing.current_price }}</p>
     <p><span class="infotext">Category:</span> {{ listing.get_category_display }}</p>
+
+    {% if user.is_authenticated %}
+    <form action="{% url 'listing' listing.id %}" method="post">
+        {% csrf_token %}
+        <input class="btn btn-primary" type="submit" value="watchlist">
+    {% endif %}
 {% endblock %}

@@ -89,6 +89,7 @@ def create(request):
 
 def listing(request, listing_id):
     listing = Auction.objects.get(pk = listing_id)
+
     return render(request, "auctions/listing.html", {
-        "listing": listing
+        "listing": listing,
     })
