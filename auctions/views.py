@@ -72,7 +72,7 @@ def create(request):
         user = User.objects.get(username=request.user)
 
         # Take in data submitted and save as form
-        form = AuctionForm(request.POST)
+        form = AuctionForm(request.POST, request.FILES)
 
         # Check if form data is valid
         if form.is_valid(): 

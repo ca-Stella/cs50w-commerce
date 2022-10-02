@@ -2,7 +2,7 @@
 {% block title %} Create Page {% endblock %}
 {% block body %}
     <h2>Create New Listing</h2>
-    <form action="{% url 'create' %}" method="post">
+    <form action="{% url 'create' %}" enctype="multipart/form-data" method="post">
         {% csrf_token %}
         <div class="form-group">
             {{ form.title.label_tag }}

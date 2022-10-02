@@ -5,6 +5,6 @@
     <h2>{{ listing.title }}</h2>
     <p>{{ listing.description }}</p>
     <p>$ {{ listing.starting_bid }}</p>
-    <p>{{ listing.category }}</p>
-    <img src="{{ listing.url }}" alt="Image">
+    <p>{{ listing.get_category_display }}</p>
+    <img src="{{ listing.url.url }}" alt="Image" style="height: 200px;">
 {% endblock %}
