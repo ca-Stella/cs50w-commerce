@@ -37,6 +37,10 @@ class AuctionForm(ModelForm):
         for fname, f in self.fields.items():
             f.widget.attrs['class'] = 'form-control'
 
+class WatchList(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="watcher")
+    listing = models.ForeignKey(Auction, on_delete=models.CASCADE, related_name="wached")
+
 class Bids(models.Model):
     pass
 

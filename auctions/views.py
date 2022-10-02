@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User, Auction, AuctionForm
+from .models import User, Auction, AuctionForm, WatchList
 
 
 
@@ -89,6 +89,14 @@ def create(request):
 
 def listing(request, listing_id):
     listing = Auction.objects.get(pk = listing_id)
+
+    if request.method == "POST":
+        # Access username
+        user = User.objects.get(username=request.user)
+        watch = WatchList()
+        watch.user = user
+        watch.listing = listing
+        watch.save()
 
     return render(request, "auctions/listing.html", {
         "listing": listing,
