@@ -2,6 +2,8 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.forms import ModelForm
 
+
+
 class User(AbstractUser):
     pass
 
@@ -38,8 +40,13 @@ class AuctionForm(ModelForm):
             f.widget.attrs['class'] = 'form-control'
 
 class WatchList(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="watcher")
-    listing = models.ForeignKey(Auction, on_delete=models.CASCADE, related_name="wached")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="watched")
+    listing = models.ForeignKey(Auction, on_delete=models.CASCADE, related_name="watcher")
+
+    def __str__(self):
+        return f"{self.user} watching {self.listing}"
+
+
 
 class Bids(models.Model):
     pass

@@ -11,6 +11,6 @@
     {% if user.is_authenticated %}
     <form action="{% url 'listing' listing.id %}" method="post">
         {% csrf_token %}
-        <input class="btn btn-primary" type="submit" value="watchlist">
+        <input class="btn btn-primary" type="submit" value="{{ watchlist_text }}">
     {% endif %}
 {% endblock %}

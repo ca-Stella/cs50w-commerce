@@ -88,16 +88,35 @@ def create(request):
         })
 
 def listing(request, listing_id):
+    # Access listing
     listing = Auction.objects.get(pk = listing_id)
+    # Access username
+    user = User.objects.get(username=request.user)
+
+    if user.watched.filter(listing=listing): 
+        watchlist_text = "Stop Watching"
+    else:
+        watchlist_text = "Watchlist"
 
     if request.method == "POST":
-        # Access username
-        user = User.objects.get(username=request.user)
-        watch = WatchList()
-        watch.user = user
-        watch.listing = listing
-        watch.save()
+        if user.watched.filter(listing=listing):
+            user.watched.filter(listing = listing).delete()
+            watchlist_text = "Watchlist"
+
+        else: 
+            watch = WatchList()
+            watch.user = user
+            watch.listing = listing
+            watch.save()
+            watchlist_text = "Stop Watching"
+
+
+        return render(request, "auctions/listing.html", {
+            "listing": listing,
+            "watchlist_text": watchlist_text
+        })
 
     return render(request, "auctions/listing.html", {
         "listing": listing,
+        "watchlist_text":watchlist_text
     })
