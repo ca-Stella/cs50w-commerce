@@ -9,3 +9,28 @@ body {
 .infotext {
     font-weight: bold;
 }
+
+.index-image {
+    height: 100px;
+}
+
+.listing-image {
+    height: 200px;
+}
+
+.bidform {
+    display: grid; 
+    grid-template-columns: 5rem 10rem; 
+    justify-content: center; 
+    align-items: baseline;
+}
+
+.center-button {
+    display: block;
+    margin-right: auto; 
+    margin-left: auto;
+}
+
+.center-alert {
+    margin: 2rem;
+}

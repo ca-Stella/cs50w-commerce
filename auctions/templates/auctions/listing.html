@@ -2,10 +2,14 @@
 {% block title %} Auction {% endblock %}
 
 {% block body %}
-    <img src="{{ listing.url.url }}" alt="Image" style="height: 200px;">
+    <img src="{{ listing.url.url }}" alt="Image" class="listing-image">
     <h2>{{ listing.title }}</h2>
     <p><span class="infotext">Description:</span> {{ listing.description }}</p>
-    <p><span class="infotext">Current price is:</span> $ {{ listing.current_price }}</p>
+    <p><span class="infotext">Current price is:</span> $ {{ listing.current_price }} 
+        {% if listing.winner %} 
+            <span class="infotext"> from </span> {{ listing.winner }}
+        {% endif %}
+    </p>
     <p><span class="infotext">Category:</span> {{ listing.get_category_display }}</p>
 
     {% if user.is_authenticated %}
@@ -15,16 +19,16 @@
     </form>
 
     {% if message %}
-        <div class="alert alert-danger" style="margin: 2rem">{{ message }}</div>
+        <div class="alert alert-danger" class="center-alert">{{ message }}</div>
     {% endif %}
 
     <form action="{% url 'listing' listing.id %}" method="post">
         {% csrf_token %}
-        <div class="form-group" style="display: grid; grid-template-columns: 5rem 10rem; justify-content: center; align-items: baseline;">
+        <div class="form-group" class="bidform">
             {{ bidform.bid_price.label_tag }}
             {{ bidform.bid_price }}
         </div>
-        <input class="btn btn-primary" type="submit" name="bid" value="Make a bid" style="display: block;margin-right: auto; margin-left: auto;"/>
+        <input class="btn btn-primary" type="submit" name="bid" value="Make a bid" class="center-button"/>
     </form>
 
     {% endif %}

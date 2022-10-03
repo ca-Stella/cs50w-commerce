@@ -29,6 +29,7 @@ class Auction(models.Model):
     starting_bid = models.DecimalField(max_digits=8, decimal_places=2)
     bids = models.ManyToManyField(Bid, blank=True, related_name="listing", null=True)
     current_price = models.DecimalField(max_digits=8, decimal_places=2)
+    winner = models.ForeignKey(User, related_name="wins", on_delete=models.CASCADE, blank=True, null=True)
     url = models.ImageField(blank=True)
     category = models.CharField(max_length=100, choices=CATEGORIES, default=CATEGORIES[7][0], blank=True)
 
