@@ -1,7 +1,7 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-    <h2>Active Listings</h2>
+    <h2><a id="active">Active Listings</a></h2>
     {% for auction in liveauctions %}
         <div>
             <h3><a href="{% url 'listing' auction.id %}">{{ auction.title }}</a></h3>
@@ -11,7 +11,7 @@
         </div>
     {% endfor %}
     <br><br>
-    <h2>Inactive Listings</h2>
+    <h2><a id="inactive">Inactive Listings</a></h2>
     {% for auction in deadauctions %}
         <div>
             <h3><a href="{% url 'listing' auction.id %}">{{ auction.title }}</a></h3>
