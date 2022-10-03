@@ -9,10 +9,13 @@
     <p><span class="infotext">Category:</span> {{ listing.get_category_display }}</p>
 
     {% if user.is_authenticated %}
-        {% if owner %}
+        {% if listing.closed %}
+        <div class="alert alert-danger center-alert">This listing is closed!</div>
+
+        {% elif owner %}
             <form action="{% url 'listing' listing.id %}" method="post">
                 {% csrf_token %}
-                <input class="btn btn-primary" type="submit" name="close" value="Close listing">
+                <input class="btn btn-primary center-button" type="submit" name="close" value="Close listing">
             </form>
 
         {% else %}
@@ -22,16 +25,16 @@
             </form>
 
             {% if message %}
-                <div class="alert alert-danger" class="center-alert">{{ message }}</div>
+                <div class="alert alert-danger center-alert">{{ message }}</div>
             {% endif %}
 
             <form action="{% url 'listing' listing.id %}" method="post">
                 {% csrf_token %}
-                <div class="form-group" class="bidform">
+                <div class="form-group bidform">
                     {{ bidform.bid_price.label_tag }}
                     {{ bidform.bid_price }}
                 </div>
-                <input class="btn btn-primary" type="submit" name="bid" value="Make a bid" class="center-button"/>
+                <input class="btn btn-primary center-button" type="submit" name="bid" value="Make a bid">
             </form>
         {% endif %}
     {% endif %}

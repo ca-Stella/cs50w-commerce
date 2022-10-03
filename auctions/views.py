@@ -93,51 +93,55 @@ def listing(request, listing_id):
     # Access username
     user = User.objects.get(username=request.user)
 
-    # If user is owner 
-    if user == listing.user:
-        return render(request, "auctions/listing.html", {
-            "listing": listing,
-            "owner": True
-        })
-
+    # Set wachlist text
     if user.watched.filter(listing=listing): 
         watchlist_text = "Stop Watching"
     else:
         watchlist_text = "Watchlist"
 
-    if request.method == "POST" and 'watchlist' in request.POST:
-        if user.watched.filter(listing=listing):
-            user.watched.filter(listing = listing).delete()
-            watchlist_text = "Watchlist"
 
-        else: 
-            watch = WatchList()
-            watch.user = user
-            watch.listing = listing
-            watch.save()
-            watchlist_text = "Stop Watching"
+    if request.method == "POST":
+        # If owner closes listing
+        if 'close' in request.POST:
+            listing.closed = True
+            listing.save()
+            
+            return render(request, "auctions/listing.html", {
+                "listing": listing
+            })
 
-    elif request.method == "POST" and 'bid' in request.POST:
-        # Take in data submitted 
-        form = BidForm(request.POST)
+        elif 'watchlist' in request.POST:
+            if user.watched.filter(listing=listing):
+                user.watched.filter(listing = listing).delete()
+                watchlist_text = "Watchlist"
+            else: 
+                watch = WatchList()
+                watch.user = user
+                watch.listing = listing
+                watch.save()
+                watchlist_text = "Stop Watching"
 
-        # Check if form data is valid
-        if form.is_valid(): 
-            bid = form.save(commit=False)
+        elif 'bid' in request.POST:
+            # Take in data submitted 
+            form = BidForm(request.POST)
 
-            if bid.bid_price < listing.current_price:
-                return render(request, "auctions/listing.html", {
-                    "listing": listing,
-                    "watchlist_text": watchlist_text,
-                    "bidform": BidForm(),
-                    "message": "Error! Invalid bid price!"
-                })
-            else:
-                bid.user = user
-                bid.save()
-                listing.current_price = bid.bid_price
-                listing.winner = user
-                listing.save()
+            # Check if form data is valid
+            if form.is_valid(): 
+                bid = form.save(commit=False)
+
+                if bid.bid_price < listing.current_price:
+                    return render(request, "auctions/listing.html", {
+                        "listing": listing,
+                        "watchlist_text": watchlist_text,
+                        "bidform": BidForm(),
+                        "message": "Error! Invalid bid price!"
+                    })
+                else:
+                    bid.user = user
+                    bid.save()
+                    listing.current_price = bid.bid_price
+                    listing.winner = user
+                    listing.save()
 
         return render(request, "auctions/listing.html", {
             "listing": listing,
@@ -145,6 +149,14 @@ def listing(request, listing_id):
             "bidform": BidForm(),
         })
 
+    # Else, if owner is checking in
+    if user == listing.user and listing.closed == False:
+        return render(request, "auctions/listing.html", {
+            "listing": listing,
+            "owner": True
+        })
+
+    # Otherwise, default load
     return render(request, "auctions/listing.html", {
         "listing": listing,
         "watchlist_text":watchlist_text,
