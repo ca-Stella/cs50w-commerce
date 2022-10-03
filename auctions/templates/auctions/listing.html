@@ -10,7 +10,11 @@
 
     {% if user.is_authenticated %}
         {% if listing.closed %}
-        <div class="alert alert-danger center-alert">This listing is closed!</div>
+            {% if winner %}
+                <div class="alert alert-success center-alert">Congratulations! You won the {{ listing.title }} for {{ listing.current_price }}!</div>
+            {% endif %}
+            <div class="alert alert-danger center-alert">This listing is closed!</div>
+
 
         {% elif owner %}
             <form action="{% url 'listing' listing.id %}" method="post">
