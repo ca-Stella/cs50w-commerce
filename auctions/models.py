@@ -64,5 +64,20 @@ class BidForm(ModelForm):
         for fname, f in self.fields.items():
             f.widget.attrs['class'] = 'form-control'
 
-class Comments(models.Model):
-    pass
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="comment")
+    comment = models.TextField()
+    datetime = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return f"{self.user} commented {self.comment}"
+
+class CommentForm(ModelForm):
+    class Meta: 
+        model = Comment
+        fields = ['comment']
+
+    def __init__(self, *args, **kwargs):
+        super(CommentForm, self).__init__(*args, **kwargs)
+        for fname, f in self.fields.items():
+            f.widget.attrs['class'] = 'form-control'
