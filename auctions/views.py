@@ -93,6 +93,13 @@ def listing(request, listing_id):
     # Access username
     user = User.objects.get(username=request.user)
 
+    # If user is owner 
+    if user == listing.user:
+        return render(request, "auctions/listing.html", {
+            "listing": listing,
+            "owner": True
+        })
+
     if user.watched.filter(listing=listing): 
         watchlist_text = "Stop Watching"
     else:

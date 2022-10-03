@@ -5,31 +5,34 @@
     <img src="{{ listing.url.url }}" alt="Image" class="listing-image">
     <h2>{{ listing.title }}</h2>
     <p><span class="infotext">Description:</span> {{ listing.description }}</p>
-    <p><span class="infotext">Current price is:</span> $ {{ listing.current_price }} 
-        {% if listing.winner %} 
-            <span class="infotext"> from </span> {{ listing.winner }}
-        {% endif %}
-    </p>
+    <p><span class="infotext">Current price is:</span> $ {{ listing.current_price }} <span class="infotext"> from </span> {{ listing.winner }} </p>
     <p><span class="infotext">Category:</span> {{ listing.get_category_display }}</p>
 
     {% if user.is_authenticated %}
-    <form action="{% url 'listing' listing.id %}" method="post">
-        {% csrf_token %}
-        <input class="btn btn-secondary" type="submit" name="watchlist" value="{{ watchlist_text }}">
-    </form>
+        {% if owner %}
+            <form action="{% url 'listing' listing.id %}" method="post">
+                {% csrf_token %}
+                <input class="btn btn-primary" type="submit" name="close" value="Close listing">
+            </form>
 
-    {% if message %}
-        <div class="alert alert-danger" class="center-alert">{{ message }}</div>
-    {% endif %}
+        {% else %}
+            <form action="{% url 'listing' listing.id %}" method="post">
+                {% csrf_token %}
+                <input class="btn btn-secondary" type="submit" name="watchlist" value="{{ watchlist_text }}">
+            </form>
 
-    <form action="{% url 'listing' listing.id %}" method="post">
-        {% csrf_token %}
-        <div class="form-group" class="bidform">
-            {{ bidform.bid_price.label_tag }}
-            {{ bidform.bid_price }}
-        </div>
-        <input class="btn btn-primary" type="submit" name="bid" value="Make a bid" class="center-button"/>
-    </form>
+            {% if message %}
+                <div class="alert alert-danger" class="center-alert">{{ message }}</div>
+            {% endif %}
 
+            <form action="{% url 'listing' listing.id %}" method="post">
+                {% csrf_token %}
+                <div class="form-group" class="bidform">
+                    {{ bidform.bid_price.label_tag }}
+                    {{ bidform.bid_price }}
+                </div>
+                <input class="btn btn-primary" type="submit" name="bid" value="Make a bid" class="center-button"/>
+            </form>
+        {% endif %}
     {% endif %}
 {% endblock %}
