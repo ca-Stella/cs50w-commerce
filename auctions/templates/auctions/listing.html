@@ -41,5 +41,16 @@
                 <input class="btn btn-primary center-button" type="submit" name="bid" value="Make a bid">
             </form>
         {% endif %}
+
+        <div class="comments">
+            <h3>Comments</h3>
+            {% for comment in comments %}
+                <div>
+                    <h4>{{ comment.user }}</h4>
+                    <p>{{ comment.description }}</p>
+                    <p>$ {{ comment.datetime }}</p>
+                </div>
+            {% endfor %}
+        </div>
     {% endif %}
 {% endblock %}

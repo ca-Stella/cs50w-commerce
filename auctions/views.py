@@ -6,10 +6,14 @@ from django.urls import reverse
 
 from .models import User, Auction, AuctionForm, WatchList, Bid, BidForm, Comment, CommentForm
 
+
 def index(request):
     auctions = Auction.objects.all()
+    liveauctions = auctions.filter(closed=False)
+    deadauctions = auctions.filter(closed=True)
     return render(request, "auctions/index.html", {
-        "auctions": auctions,
+        "liveauctions": liveauctions,
+        "deadauctions": deadauctions,
     })
 
 def login_view(request):
@@ -87,10 +91,12 @@ def create(request):
         })
 
 def listing(request, listing_id):
-    # Access listing
-    listing = Auction.objects.get(pk = listing_id)
     # Access username
     user = User.objects.get(username=request.user)
+    # Access listing
+    listing = Auction.objects.get(pk = listing_id)
+    # Access comments
+    comments = Comment.objects.get(listing = listing_id)
 
     # Set wachlist text
     if user.watched.filter(listing=listing): 
@@ -106,9 +112,11 @@ def listing(request, listing_id):
             listing.save()
             
             return render(request, "auctions/listing.html", {
-                "listing": listing
+                "listing": listing,
+                "comments": comments
             })
 
+        # If watchlist button is clicked
         elif 'watchlist' in request.POST:
             if user.watched.filter(listing=listing):
                 user.watched.filter(listing = listing).delete()
@@ -120,6 +128,7 @@ def listing(request, listing_id):
                 watch.save()
                 watchlist_text = "Stop Watching"
 
+        # Else if a bid is submitted
         elif 'bid' in request.POST:
             # Take in data submitted 
             form = BidForm(request.POST)
@@ -133,7 +142,8 @@ def listing(request, listing_id):
                         "listing": listing,
                         "watchlist_text": watchlist_text,
                         "bidform": BidForm(),
-                        "message": "Error! Invalid bid price!"
+                        "message": "Error! Invalid bid price!",
+                        "comments": comments
                     })
                 else:
                     bid.user = user
@@ -146,18 +156,30 @@ def listing(request, listing_id):
             "listing": listing,
             "watchlist_text": watchlist_text,
             "bidform": BidForm(),
+            "comments": comments
         })
 
     # Else, if owner is checking in
     if user == listing.user and listing.closed == False:
         return render(request, "auctions/listing.html", {
             "listing": listing,
-            "owner": True
+            "owner": True,
+            "comments": comments
         })
+
+    # Else, if winner is checking in on closed listing
+    elif user == listing.winner and listing.closed:
+        return render(request, "auctions/listing.html", {
+            "listing": listing,
+            "winner": True, 
+            "comments": comments
+        })
+
 
     # Otherwise, default load
     return render(request, "auctions/listing.html", {
         "listing": listing,
         "watchlist_text":watchlist_text,
         "bidform": BidForm(),
+        "comments": comments
     })

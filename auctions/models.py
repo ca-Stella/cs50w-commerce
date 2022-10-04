@@ -67,6 +67,7 @@ class BidForm(ModelForm):
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="comment")
     comment = models.TextField()
+    listing = models.ForeignKey(Auction, on_delete=models.CASCADE, related_name="comments")
     datetime = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
