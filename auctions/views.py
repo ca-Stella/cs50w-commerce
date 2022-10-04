@@ -90,13 +90,17 @@ def create(request):
             "form": AuctionForm()
         })
 
+
 def listing(request, listing_id):
     # Access username
     user = User.objects.get(username=request.user)
     # Access listing
     listing = Auction.objects.get(pk = listing_id)
     # Access comments
-    comments = Comment.objects.get(listing = listing_id)
+    try:
+        comments = Comment.objects.get(listing = listing_id)
+    except Comment.DoesNotExist:
+        comments = None
 
     # Set wachlist text
     if user.watched.filter(listing=listing): 
@@ -110,13 +114,21 @@ def listing(request, listing_id):
         if 'close' in request.POST:
             listing.closed = True
             listing.save()
-            
+
             return render(request, "auctions/listing.html", {
                 "listing": listing,
-                "comments": comments
+                "comments": comments,
+                "commentform": CommentForm()
             })
 
-        # If watchlist button is clicked
+        # If comment is added
+        if 'comment' in request.POST: 
+            comment = Comment()
+            comment.user = user
+            comment.listing = listing
+            comment.save()
+
+        # Else if watchlist button is clicked
         elif 'watchlist' in request.POST:
             if user.watched.filter(listing=listing):
                 user.watched.filter(listing = listing).delete()
@@ -143,7 +155,8 @@ def listing(request, listing_id):
                         "watchlist_text": watchlist_text,
                         "bidform": BidForm(),
                         "message": "Error! Invalid bid price!",
-                        "comments": comments
+                        "comments": comments,
+                        "commentform": CommentForm()
                     })
                 else:
                     bid.user = user
@@ -172,7 +185,8 @@ def listing(request, listing_id):
         return render(request, "auctions/listing.html", {
             "listing": listing,
             "winner": True, 
-            "comments": comments
+            "comments": comments,
+            "commentform": CommentForm()
         })
 
 
@@ -181,5 +195,6 @@ def listing(request, listing_id):
         "listing": listing,
         "watchlist_text":watchlist_text,
         "bidform": BidForm(),
-        "comments": comments
+        "comments": comments,
+        "commentform": CommentForm()
     })
