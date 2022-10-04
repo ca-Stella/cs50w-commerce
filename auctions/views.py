@@ -98,7 +98,7 @@ def listing(request, listing_id):
     listing = Auction.objects.get(pk = listing_id)
     # Access comments
     try:
-        comments = Comment.objects.get(listing = listing_id)
+        comments = Comment.objects.filter(listing = listing_id).all()
     except Comment.DoesNotExist:
         comments = None
 
@@ -107,7 +107,6 @@ def listing(request, listing_id):
         watchlist_text = "Stop Watching"
     else:
         watchlist_text = "Watchlist"
-
 
     if request.method == "POST":
         # If owner closes listing
@@ -122,11 +121,13 @@ def listing(request, listing_id):
             })
 
         # If comment is added
-        if 'comment' in request.POST: 
-            comment = Comment()
-            comment.user = user
-            comment.listing = listing
-            comment.save()
+        if 'commentpost' in request.POST: 
+            form = CommentForm(request.POST)
+            if form.is_valid():
+                comment = form.save(commit=False)
+                comment.user = user
+                comment.listing = listing
+                comment.save()
 
         # Else if watchlist button is clicked
         elif 'watchlist' in request.POST:
@@ -169,7 +170,8 @@ def listing(request, listing_id):
             "listing": listing,
             "watchlist_text": watchlist_text,
             "bidform": BidForm(),
-            "comments": comments
+            "comments": comments, 
+            "commentform": CommentForm()
         })
 
     # Else, if owner is checking in
@@ -177,7 +179,8 @@ def listing(request, listing_id):
         return render(request, "auctions/listing.html", {
             "listing": listing,
             "owner": True,
-            "comments": comments
+            "comments": comments,
+            "commentform": CommentForm()
         })
 
     # Else, if winner is checking in on closed listing

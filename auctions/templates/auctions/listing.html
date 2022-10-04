@@ -46,19 +46,19 @@
             <h3>Comments</h3>
 
             <form action="{% url 'listing' listing.id %}" method="post">
-              {% csrf_token %}
-              <div class="form-group">
-                  {{ commentform.comment.label_tag }}
-                  {{ commentform.comment }}
-              </div>
-              <input class="btn btn-primary" type="submit" name="comment" value="Comment">
-          </form>
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="id_text">Comment: </label>
+                    {{ commentform.text }}
+                </div>
+                <input class="btn btn-primary" type="submit" name="commentpost" value="Comment">
+            </form>
 
             {% for comment in comments %}
                 <div class="comment">
                     <h4>{{ comment.user }}</h4>
-                    <p>{{ comment.description }}</p>
-                    <p class="datetime">$ {{ comment.datetime }}</p>
+                    <p>{{ comment.text }}</p>
+                    <p class="datetime">{{ comment.datetime }}</p>
                 </div>
             {% endfor %}
         </div>
