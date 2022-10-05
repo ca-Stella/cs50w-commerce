@@ -2,10 +2,11 @@
 {% block title %} Auction {% endblock %}
 
 {% block body %}
-    <img src="{{ listing.url.url }}" alt="Image" class="listing-image">
     <h2>{{ listing.title }}</h2>
+    <img src="{{ listing.url.url }}" alt="Image" class="listing-image">
+    <p><span class="infotext">Listed by:</span> {{ listing.user }}</p>
     <p><span class="infotext">Description:</span> {{ listing.description }}</p>
-    <p><span class="infotext">Current price is:</span> $ {{ listing.current_price }} <span class="infotext"> from </span> {{ listing.winner }} </p>
+    <p><span class="infotext">Current price is:</span> ${{ listing.current_price }} <span class="infotext"> from </span> {{ listing.winner }} </p>
     <p><span class="infotext">Category:</span> {{ listing.get_category_display }}</p>
 
     {% if user.is_authenticated %}
@@ -23,11 +24,6 @@
             </form>
 
         {% else %}
-            <form action="{% url 'listing' listing.id %}" method="post">
-                {% csrf_token %}
-                <input class="btn btn-secondary" type="submit" name="watchlist" value="{{ watchlist_text }}">
-            </form>
-
             {% if message %}
                 <div class="alert alert-danger center-alert">{{ message }}</div>
             {% endif %}
@@ -38,29 +34,34 @@
                     {{ bidform.bid_price.label_tag }}
                     {{ bidform.bid_price }}
                 </div>
-                <input class="btn btn-primary center-button" type="submit" name="bid" value="Make a bid">
+                <div class="buttons">
+                  <input class="btn btn-primary center-button" type="submit" name="bid" value="Make a bid">
+                  <input class="btn btn-secondary" type="submit" name="watchlist" value="{{ watchlist_text }}">
+                </div>
             </form>
         {% endif %}
 
         <div class="comments">
             <h3>Comments</h3>
 
-            <form action="{% url 'listing' listing.id %}" method="post">
+            <div class="read-comments">
+                {% for comment in comments %}
+                  <div class="comment">
+                      <h4>{{ comment.user }}</h4>
+                      <p>{{ comment.text }}</p>
+                      <p class="datetime">{{ comment.datetime }}</p>
+                  </div>
+                {% endfor %}
+            </div>
+
+            <form action="{% url 'listing' listing.id %}" method="post" class="commenting">
                 {% csrf_token %}
-                <div class="form-group">
-                    <label for="id_text">Comment: </label>
+                <div class="form-group commentarea">
+                    <label for="id_text">Add comment: </label>
                     {{ commentform.text }}
                 </div>
-                <input class="btn btn-primary" type="submit" name="commentpost" value="Comment">
+                <input class="btn btn-info" type="submit" name="commentpost" value="Comment">
             </form>
-
-            {% for comment in comments %}
-                <div class="comment">
-                    <h4>{{ comment.user }}</h4>
-                    <p>{{ comment.text }}</p>
-                    <p class="datetime">{{ comment.datetime }}</p>
-                </div>
-            {% endfor %}
         </div>
     {% endif %}
 {% endblock %}

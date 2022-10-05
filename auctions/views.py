@@ -98,7 +98,7 @@ def listing(request, listing_id):
     listing = Auction.objects.get(pk = listing_id)
     # Access comments
     try:
-        comments = Comment.objects.filter(listing = listing_id).all()
+        comments = Comment.objects.filter(listing = listing_id).all().order_by('-datetime')
     except Comment.DoesNotExist:
         comments = None
 
@@ -150,12 +150,12 @@ def listing(request, listing_id):
             if form.is_valid(): 
                 bid = form.save(commit=False)
 
-                if bid.bid_price < listing.current_price:
+                if bid.bid_price == None or bid.bid_price < listing.current_price:
                     return render(request, "auctions/listing.html", {
                         "listing": listing,
                         "watchlist_text": watchlist_text,
                         "bidform": BidForm(),
-                        "message": "Error! Invalid bid price!",
+                        "message": "Error: Invalid bid price!",
                         "comments": comments,
                         "commentform": CommentForm()
                     })

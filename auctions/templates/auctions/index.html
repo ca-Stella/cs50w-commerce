@@ -2,22 +2,27 @@
 
 {% block body %}
     <h2><a id="active">Active Listings</a></h2>
-    {% for auction in liveauctions %}
-        <div>
-            <h3><a href="{% url 'listing' auction.id %}">{{ auction.title }}</a></h3>
-            <img src="{{ auction.url.url }}" alt="Image" class="index-image">
-            <p>{{ auction.description }}</p>
-            <p>$ {{ auction.current_price }}</p>
-        </div>
-    {% endfor %}
+    <div class="listings">
+        {% for auction in liveauctions %}
+            <div class="listing">
+                <h3><a href="{% url 'listing' auction.id %}">{{ auction.title }}</a></h3>
+                <p class="index-price">Current price: $ {{ auction.current_price }}</p>
+                <img src="{{ auction.url.url }}" alt="Image" class="index-image">
+                <p>{{ auction.description }}</p>
+            </div>
+        {% endfor %}
+    </div>
+
     <br><br>
     <h2><a id="inactive">Inactive Listings</a></h2>
-    {% for auction in deadauctions %}
-        <div>
-            <h3><a href="{% url 'listing' auction.id %}">{{ auction.title }}</a></h3>
-            <img src="{{ auction.url.url }}" alt="Image" class="index-image">
-            <p>{{ auction.description }}</p>
-            <p>$ {{ auction.current_price }} from {{ auction.winner }}</p>
-        </div>
-    {% endfor %}
+    <div class="listings">
+        {% for auction in deadauctions %}
+            <div class="listing">
+                <h3><a href="{% url 'listing' auction.id %}">{{ auction.title }}</a></h3>
+                <p class="index-price">Current price: $ {{ auction.current_price }}</p>
+                <img src="{{ auction.url.url }}" alt="Image" class="index-image">
+                <p>{{ auction.description }}</p>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}

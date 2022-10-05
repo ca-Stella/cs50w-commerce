@@ -7,20 +7,20 @@ class User(AbstractUser):
 
 class Bid(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="bid")
-    bid_price=models.DecimalField(max_digits=8, decimal_places=2)
+    bid_price=models.DecimalField(max_digits=8, decimal_places=2, blank=True)
 
     def __str__(self):
         return f"{self.user} bidding ${self.bid_price}"
 
 class Auction(models.Model):
     CATEGORIES = [
-        ('BOOKS', 'Books'),
         ('CLOTH', 'Clothes'),
         ('ELECT', 'Electronics'),
         ('HEALTH', 'Health'),
         ('HOBBY', 'Hobbies'),
         ('KIDTO', 'Toys'),
         ('SPORT', 'Sports'),
+        ('TOOLS', 'Tools'),
         ('OTHER', 'None'),
     ]
     title = models.CharField(max_length=100)

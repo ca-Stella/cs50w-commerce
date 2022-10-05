@@ -1,36 +1,134 @@
 body {
-    padding: 10px;
+    padding: 20px;
 }
 
 #id_starting_bid {
     padding-left: 26px;
 }
 
+
+/* Index page */
+.listings {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.listing {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 300px;
+    border: grey solid 2px;
+    border-radius: 10px;
+    padding: 1rem;
+    gap: 0.2rem;
+    align-items: center;
+}
+
+.listing h3 {
+    margin-top: 0.6rem;
+    margin-bottom: 0;
+}
+
+.index-image {
+    height: auto;
+    width: 80%;
+    object-fit: cover;
+    margin-bottom: 0.4rem;
+}
+
+.index-price {
+    margin-bottom: 0.4rem;
+}
+
+/* Listing page */
 .infotext {
     font-weight: bold;
 }
 
-.index-image {
-    height: 100px;
-}
-
 .listing-image {
     height: 200px;
+    margin: 1rem 0;
 }
 
 .bidform {
     display: grid; 
-    grid-template-columns: 5rem 10rem; 
+    grid-template-columns: 6rem 10rem; 
     justify-content: center; 
     align-items: baseline;
 }
 
-.center-button {
-    display: block;
-    margin-right: auto; 
-    margin-left: auto;
+.buttons {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.buttons > input {
+    width: 8rem;
+    height: 3rem;
 }
 
 .center-alert {
     margin: 2rem;
+}
+
+h3 {
+    margin-top: 2rem;
+}
+
+
+
+
+
+/* Comment section in listing page */
+.commenting {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    margin: 1rem;
+    padding: 1rem;
+}
+
+.commenting .btn-info {
+    align-self: end;
+}
+
+.commentarea {
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.commenting textarea {
+    height: 6rem;
+    width: 100%;
+}
+
+.read-comments {
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+.comment {
+    margin: 1rem;
+    padding-bottom: 0.4rem;
+    border-bottom: #14a2b8 solid 1.5px;
+}
+
+.comment > h4 {
+    margin-top: 1rem;
+}
+
+.comment > p {
+    margin-bottom: 0;
+}
+
+.datetime {
+    color: grey;
+    font-size: 0.8rem;
+    text-align: end;
+    margin-bottom: 1rem;
 }
