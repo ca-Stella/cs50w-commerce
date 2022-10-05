@@ -1,0 +1,13 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Watchlist</h2>
+    {% for auction in watchauctions %}
+        <div class="listing">
+            <h3><a href="{% url 'listing' auction.id %}">{{ auction.title }}</a></h3>
+            <p class="index-price">Current price: $ {{ auction.current_price }}</p>
+            <img src="{{ auction.url.url }}" alt="Image" class="index-image">
+            <p>{{ auction.description }}</p>
+        </div>
+
+{% endblock %}

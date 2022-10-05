@@ -201,3 +201,6 @@ def listing(request, listing_id):
         "comments": comments,
         "commentform": CommentForm()
     })
+
+def watchlist(request):
+    pass
