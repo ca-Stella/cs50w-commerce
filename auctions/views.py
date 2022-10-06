@@ -203,4 +203,9 @@ def listing(request, listing_id):
     })
 
 def watchlist(request):
-    pass
+    # Access username
+    user = User.objects.get(username=request.user)
+    watchauctions = user.watched.all()
+    return render(request, "auctions/watchlist.html", {
+        "watchauctions": watchauctions,
+    })

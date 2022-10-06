@@ -3,11 +3,21 @@
 {% block body %}
     <h2>Watchlist</h2>
     {% for auction in watchauctions %}
-        <div class="listing">
-            <h3><a href="{% url 'listing' auction.id %}">{{ auction.title }}</a></h3>
-            <p class="index-price">Current price: $ {{ auction.current_price }}</p>
-            <img src="{{ auction.url.url }}" alt="Image" class="index-image">
-            <p>{{ auction.description }}</p>
-        </div>
-
+        {% if auction.listing.closed == False %}
+            <div class="listing">
+                <h3><a href="{% url 'listing' auction.listing.id %}">{{ auction.listing.title }}</a></h3>
+                <p class="index-price">Current price: $ {{ auction.listing.current_price }}</p>
+                <img src="{{ auction.listing.url.url }}" alt="Image" class="index-image">
+                <p>{{ auction.listing.description }}</p>
+            </div>
+        {% else %}
+            <h3>Closed</h3>
+            <div class="listing">
+                <h3><a href="{% url 'listing' auction.listing.id %}">{{ auction.listing.title }}</a></h3>
+                <p class="index-price">Current price: $ {{ auction.listing.current_price }}</p>
+                <img src="{{ auction.listing.url.url }}" alt="Image" class="index-image">
+                <p>{{ auction.listing.description }}</p>
+            </div>
+        {% endif %}
+    {% endfor %}
 {% endblock %}
