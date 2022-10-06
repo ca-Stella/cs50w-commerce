@@ -209,3 +209,6 @@ def watchlist(request):
     return render(request, "auctions/watchlist.html", {
         "watchauctions": watchauctions,
     })
+
+def categories(request):
+    pass
