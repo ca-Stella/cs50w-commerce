@@ -215,3 +215,13 @@ def categories(request):
     return render(request, "auctions/categories.html", {
     "categories": categories,
 })
+
+def category(request, cat):
+    # Access listing
+    everylisting = Auction.objects.all()
+    listings = everylisting.filter(category = cat)
+    listings = everylisting.filter(category = cat)
+    return render(request, "auctions/category.html", {
+        "category": cat,
+        "listings": listings,
+    })

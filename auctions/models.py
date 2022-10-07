@@ -14,13 +14,13 @@ class Bid(models.Model):
 
 class Auction(models.Model):
     CATEGORIES = [
-        ('CLOTH', 'Clothes'),
-        ('ELECT', 'Electronics'),
-        ('HEALTH', 'Health'),
-        ('HOBBY', 'Hobbies'),
-        ('KIDTO', 'Toys'),
-        ('SPORT', 'Sports'),
-        ('TOOLS', 'Tools'),
+        ('Clothes', 'Clothes'),
+        ('Electronics', 'Devices & Electronics'),
+        ('Health', 'Health & Foods'),
+        ('Hobbies', 'Hobbies'),
+        ('Toys', 'Kids & Toys'),
+        ('Sports', 'Sports'),
+        ('Tools', 'Tools & Services'),
         ('OTHER', 'None'),
     ]
     title = models.CharField(max_length=100)
