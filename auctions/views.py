@@ -5,9 +5,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
-
 from .models import User, Auction, AuctionForm, WatchList, Bid, BidForm, Comment, CommentForm
-
 
 def index(request):
     auctions = Auction.objects.all()

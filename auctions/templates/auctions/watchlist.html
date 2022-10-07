@@ -7,7 +7,9 @@
             <div class="listing">
                 <h3><a href="{% url 'listing' auction.listing.id %}">{{ auction.listing.title }}</a></h3>
                 <p class="index-price">Current price: $ {{ auction.listing.current_price }}</p>
-                <img src="{{ auction.listing.url.url }}" alt="Image" class="index-image">
+                {% if auction.listing.url %}
+                <img src="{{ auction.listing.url }}" alt="Image" class="index-image">
+                {% endif %}
                 <p>{{ auction.listing.description }}</p>
             </div>
         {% endfor %}
@@ -19,7 +21,9 @@
                 <div class="listing">
                     <h3><a href="{% url 'listing' auction.listing.id %}">{{ auction.listing.title }}</a></h3>
                     <p class="index-price">Current price: $ {{ auction.listing.current_price }}</p>
-                    <img src="{{ auction.listing.url.url }}" alt="Image" class="index-image">
+                    {% if auction.listing.url %}
+                    <img src="{{ auction.listing.url }}" alt="Image" class="index-image">
+                    {% endif %}
                     <p>{{ auction.listing.description }}</p>
                 </div>
             {% endfor %}
