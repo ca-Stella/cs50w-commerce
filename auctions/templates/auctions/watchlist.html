@@ -2,22 +2,27 @@
 
 {% block body %}
     <h2>Watchlist</h2>
-    {% for auction in watchauctions %}
-        {% if auction.listing.closed == False %}
+    <div class="listings">
+        {% for auction in liveauctions %}
             <div class="listing">
                 <h3><a href="{% url 'listing' auction.listing.id %}">{{ auction.listing.title }}</a></h3>
                 <p class="index-price">Current price: $ {{ auction.listing.current_price }}</p>
                 <img src="{{ auction.listing.url.url }}" alt="Image" class="index-image">
                 <p>{{ auction.listing.description }}</p>
             </div>
-        {% else %}
-            <h3>Closed</h3>
-            <div class="listing">
-                <h3><a href="{% url 'listing' auction.listing.id %}">{{ auction.listing.title }}</a></h3>
-                <p class="index-price">Current price: $ {{ auction.listing.current_price }}</p>
-                <img src="{{ auction.listing.url.url }}" alt="Image" class="index-image">
-                <p>{{ auction.listing.description }}</p>
-            </div>
-        {% endif %}
-    {% endfor %}
+        {% endfor %}
+    </div>
+    {% if deadauctions %}
+        <h3>Closed</h3>
+        <div class="listings">
+            {% for auction in deadauctions %}
+                <div class="listing">
+                    <h3><a href="{% url 'listing' auction.listing.id %}">{{ auction.listing.title }}</a></h3>
+                    <p class="index-price">Current price: $ {{ auction.listing.current_price }}</p>
+                    <img src="{{ auction.listing.url.url }}" alt="Image" class="index-image">
+                    <p>{{ auction.listing.description }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
 {% endblock %}

@@ -205,23 +205,30 @@ def listing(request, listing_id):
 def watchlist(request):
     # Access username
     user = User.objects.get(username=request.user)
+    # Get watchlisted listings
     watchauctions = user.watched.all()
+    liveauctions = watchauctions.filter(listing__closed = False)
+    deadauctions = watchauctions.filter(listing__closed = True)
+
     return render(request, "auctions/watchlist.html", {
-        "watchauctions": watchauctions,
+        "liveauctions": liveauctions,
+        "deadauctions": deadauctions,
     })
 
 def categories(request):
     categories = Auction.category.field.choices
     return render(request, "auctions/categories.html", {
-    "categories": categories,
-})
+        "categories": categories,
+    })
 
 def category(request, cat):
     # Access listing
     everylisting = Auction.objects.all()
     listings = everylisting.filter(category = cat)
-    listings = everylisting.filter(category = cat)
+    livelistings = listings.filter(closed = False)
+    deadlistings = listings.filter(closed = True)
     return render(request, "auctions/category.html", {
         "category": cat,
-        "listings": listings,
+        "deadlistings": deadlistings,
+        "livelistings": livelistings,
     })
