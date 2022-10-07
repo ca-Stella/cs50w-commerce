@@ -211,4 +211,7 @@ def watchlist(request):
     })
 
 def categories(request):
-    pass
+    categories = Auction.category.field.choices
+    return render(request, "auctions/categories.html", {
+    "categories": categories,
+})
