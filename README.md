@@ -4,6 +4,7 @@
 
 This is an e-commerce auction page created as part of The CS50's Web Programming with Python and JavaScript course.  
 
+[📹 Youtube demo](https://youtu.be/zah2YSZZj_s)
 
 ## Outcomes
 - Used SQL and migrations to create, modify, and build multiple databases
@@ -15,7 +16,7 @@ This is an e-commerce auction page created as part of The CS50's Web Programming
 - Used Git and GitHub for overall project management
 
 ### Technologies & Resources Used
-- <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="html" width="30" height="30"/> &emsp; <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt = "python" width="30" height="30"/> &emsp; <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="css" width="30" height="30"/> &emsp; <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" alt="django" width="30" height="30"/> &emsp; &emsp; <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" alt="vscode" width="30" height="30"/> 
+- <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="html" width="30" height="30"/> &emsp; <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt = "python" width="30" height="30"/> &emsp; <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" alt="django" width="30" height="30"/>  &emsp; <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="css" width="30" height="30"/> &emsp; <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" alt="vscode" width="30" height="30"/> 
 - Harry Potter images from <a href="https://harrypotter.fandom.com/wiki">Harry Potter Wiki</a>.
 
 ## Specifications 
