@@ -132,3 +132,8 @@ h3 {
     text-align: end;
     margin-bottom: 1rem;
 }
+
+.index-description {
+    height: 9rem;
+    overflow-y: auto;
+}

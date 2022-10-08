@@ -98,7 +98,7 @@ def listing(request, listing_id):
     listing = Auction.objects.get(pk = listing_id)
     # Access comments
     try:
-        comments = Comment.objects.filter(listing = listing_id).all().order_by('-datetime')
+        comments = Comment.objects.filter(listing = listing_id).all().order_by('datetime')
     except Comment.DoesNotExist:
         comments = None
 

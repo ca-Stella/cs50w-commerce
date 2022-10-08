@@ -3,8 +3,8 @@
 
 {% block body %}
     <h2>{{ listing.title }}</h2>
-    {% if listing.url %}
-    <img src="{{ listing.url }}" alt="Image" class="listing-image">
+    {% if listing.url.url %}
+    <img src="{{ listing.url.url }}" alt="Image" class="listing-image">
     {% endif %}
     <p><span class="infotext">Listed by:</span> {{ listing.user }}</p>
     <p><span class="infotext">Description:</span> {{ listing.description }}</p>
