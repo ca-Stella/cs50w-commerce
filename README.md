@@ -1,5 +1,7 @@
 # CS50's Web Programming - Commerce Assignment
 
+![Image](./img/screenshot.png)
+
 This is an e-commerce auction page created as part of The CS50's Web Programming with Python and JavaScript course.  
 
 
